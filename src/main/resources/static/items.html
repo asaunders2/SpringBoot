@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/css/site.css">
+<body>
+<h1>Items</h1>
+<span id="stuff"></span>
+<script>
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function ()
+    {
+        if (this.readyState == 4 && this.status == 200)
+        {
+            var myObj = JSON.parse(this.responseText);
+            var content = "<table id = myTable>";
+            content += "<tr><th>Item Number</th><th>Item Name</th><th>Price</th><th>Image</th></tr>";
+            for (var property in myObj)
+            {
+                if (myObj.hasOwnProperty(property))
+                {
+                    content += "<tr><td>" + myObj[property].name + "</td><td>" + myObj[property].price + "</td>"
+                        + "<td>" + myObj[property].description + "</td>" + "<td>" + myObj[property].image + "</td></tr>";
+                }
+            }
+            content += "</table>"
+            document.getElementById("stuff").innerHTML = content;
+        }
+    };
+    xmlhttp.open("GET", "/items", true);
+    xmlhttp.send();
+</script>
+</body>
